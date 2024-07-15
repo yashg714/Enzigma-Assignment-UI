@@ -1,0 +1,197 @@
+<div style="padding: 5% 5% 5% 5%;">
+
+  <div class="slds-card">
+    <div class="slds-card__header slds-grid">
+      <header class="slds-media slds-media_center slds-has-flexi-truncate">
+        <div class="slds-media__figure">
+          <span class="slds-icon_container slds-icon-standard-task" title="Tasks">
+            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+              <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#task"></use>
+            </svg>
+          </span>
+        </div>
+        <div class="slds-media__body">
+          <h2 class="slds-card__header-title">
+            <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Tasks">
+              <span>Tasks</span>
+            </a>
+          </h2>
+          <span class="slds-card__header-subtitle">{{tasks.length}} records</span>
+        </div>
+      </header>
+      <div class="slds-no-flex">
+        <button class="slds-button slds-button_neutral" (click)="createTask()">New Task</button>
+        <button class="slds-button slds-button_neutral" (click)="getTasks()">Refresh</button>
+      </div>
+    </div>
+    <div class="slds-card__body">
+      <div class="slds-form-element slds-m-bottom_medium">
+        <div class="slds-form-element__control">
+          <div class="slds-combobox_container slds-has-inline-listbox">
+            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false"
+              aria-haspopup="listbox" role="combobox">
+              <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                <input type="text" class="slds-input slds-combobox__input" (keypress)="onKeyPress($event)" id="combobox-id-1" aria-controls="listbox-id-1"
+                  autocomplete="off" role="textbox" placeholder="Search">
+                <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right"
+                  title="Search">
+                  <svg class="slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="slds-table slds-table_bordered slds-table_fixed-layout slds-no-row-hover">
+        <thead>
+          <tr class="slds-line-height_reset">
+            <th scope="col">
+              <div class="slds-th__action">
+                <span class="slds-checkbox">
+                  <input type="checkbox" id="checkbox-all" value="on" />
+                  <!-- <label class="slds-checkbox__label" for="checkbox-all">
+                      <span class="slds-checkbox_faux"></span>
+                    </label> -->
+                </span>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Assigned To">Assigned To</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Status">Status</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Due Date">Due Date</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Priority">Priority</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Comments">Comments</div>
+            </th>
+            <th scope="col">
+              <div class="slds-th__action">
+                <span class="slds-assistive-text">Actions</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of tasks; let i = index" class="slds-hint-parent">
+            <td scope="col">
+              <span class="slds-checkbox">
+                <input type="checkbox" id="checkbox-{{i}}" value="on" />
+                <label class="slds-checkbox__label" for="checkbox-{{i}}">
+                  <span class="slds-checkbox_faux"></span>
+                </label>
+              </span>
+            </td>
+            <td>
+              <div class="slds-truncate" title="{{task.userId}}">{{task.userId}}</div>
+            </td>
+            <td>
+              <div class="slds-truncate" title="{{task.status}}">{{task.status}}</div>
+            </td>
+            <td>
+              <div class="slds-truncate" title="{{task.dueDate}}">{{task.dueDate | date: 'dd/MM/yyyy'}}</div>
+            </td>
+            <td>
+              <div class="slds-truncate" title="{{task.priority}}">{{task.priority}}</div>
+            </td>
+            <td>
+              <div class="slds-truncate" title="{{task.description}}">{{task.description}}</div>
+            </td>
+            <!-- <td>
+              <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+                <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" (click)="toggleDropdown()"
+                  aria-haspopup="true" title="Show More">
+                  <svg  class="slds-button__icon" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                  </svg>
+                  <span class="slds-assistive-text">Show More</span>
+                </button>
+                <div class="slds-dropdown slds-dropdown_left" *ngIf="actionFlag ">
+                  <ul class="slds-dropdown__list" role="menu">
+                    <li class="slds-dropdown__item" role="presentation">
+                      <a href="javascript:void(0);" role="menuitem" tabindex="-1" (click)="editTask()">
+                        <span class="slds-truncate" title="Edit">Edit</span>
+                      </a>
+                    </li>
+                    <li class="slds-dropdown__item" role="presentation">
+                      <a href="javascript:void(0);" role="menuitem" tabindex="-1" (click)="deleteTask()">
+                        <span class="slds-truncate" title="Delete">Delete</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </td> -->
+            <td>
+              <div class="slds-dropdown-trigger slds-dropdown-trigger_click" [class.slds-is-open]="actionFlag">
+                <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small"
+                  aria-haspopup="true" title="Show More" (click)="toggleDropdown()">
+                  <svg class="slds-button__icon" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                  </svg>
+                  <span class="slds-assistive-text">Show More</span>
+                </button>
+                <div class="slds-dropdown slds-dropdown_left" *ngIf="actionFlag && checkCheckbox(i)">
+                  <ul class="slds-dropdown__list" role="menu">
+                    <li class="slds-dropdown__item" role="presentation">
+                      <a href="javascript:void(0);" role="menuitem" tabindex="-1" (click)="editTaskFun(task)">
+                        <span class="slds-truncate" title="Edit">Edit</span>
+                      </a>
+                    </li>
+                    <li class="slds-dropdown__item" role="presentation">
+                      <a href="javascript:void(0);" role="menuitem" tabindex="-1" (click)="deleteTask(task.taskId)">
+                        <span class="slds-truncate" title="Delete">Delete</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="slds-grid slds-grid_vertical-align-center slds-p-vertical_medium">
+        <div class="slds-col slds-text-body_regular">
+          Showing 1 to 10 of {{tasks.length}} records
+        </div>
+        <div class="slds-col slds-text-align_center">
+          <button class="slds-button slds-button_icon slds-button_icon-container" title="First Page">
+            <svg class="slds-button__icon" aria-hidden="true">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#back"></use>
+            </svg>
+            <span class="slds-assistive-text">First Page</span>
+          </button>
+          <button class="slds-button slds-button_icon slds-button_icon-container" title="Previous Page">
+            <svg class="slds-button__icon" aria-hidden="true">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#left"></use>
+            </svg>
+            <span class="slds-assistive-text">Previous Page</span>
+          </button>
+          <button class="slds-button slds-button_icon slds-button_icon-container" title="Next Page">
+            <svg class="slds-button__icon" aria-hidden="true">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#right"></use>
+            </svg>
+            <span class="slds-assistive-text">Next Page</span>
+          </button>
+          <button class="slds-button slds-button_icon slds-button_icon-container" title="Last Page">
+            <svg class="slds-button__icon" aria-hidden="true">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#forward"></use>
+            </svg>
+            <span class="slds-assistive-text">Last Page</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-task-form #dialog (onClose)="handleClose()" (onSave)="handleSave()" ></app-task-form>
+
+<!-- [isEdit]="isEdit" [editTask]="editTask" -->

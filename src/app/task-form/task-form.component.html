@@ -1,0 +1,112 @@
+<div *ngIf="isOpen" class="slds">
+  <!-- Backdrop -->
+  
+  <div class="slds-backdrop slds-backdrop_open"></div>
+
+  <!-- Modal -->
+  <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+
+          <!-- Modal/Popup Header -->
+          <header class="slds-modal__header">
+              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" (click)="close()" title="Close">
+                  <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                  </svg>
+                  <span class="slds-assistive-text">Close</span>
+              </button>
+              <h2 class="slds-text-heading_medium">{{heading}}</h2>
+              
+          </header>
+
+          <!-- Modal/Popup Body -->
+          <div class="slds-modal__content slds-p-around_medium">
+            <div class="slds-modal__content slds-p-around_medium">
+              <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" id="taskForm">
+                <div class="slds-grid slds-gutters">
+                  <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form-element"
+                      [class.slds-has-error]="taskForm.get('userId')?.invalid && taskForm.get('userId')?.touched">
+                      <label class="slds-form-element__label" for="userId">Assigned To</label>
+                      <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                          <select class="slds-select" id="userId" name="userId" formControlName="userId">
+                            <option value='null' disabled selected>Select a user</option>
+                            <option *ngFor='let user of userList'>{{user}}</option>
+                          </select>
+                        </div>
+                        <div *ngIf="taskForm.get('userId')?.invalid && taskForm.get('userId')?.touched"
+                          class="slds-form-element__help">Assigned To is required.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form-element"
+                      [class.slds-has-error]="taskForm.get('status')?.invalid && taskForm.get('status')?.touched">
+                      <label class="slds-form-element__label" for="status">Status</label>
+                      <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                          
+                          <select class="slds-select" id="status" name="status" formControlName="status">
+                            <option value="null" disabled selected>Select status</option>
+                            <option *ngFor='let status of statusList'>{{status}}</option>
+                          </select>
+                        </div>
+                        <div *ngIf="taskForm.get('status')?.invalid && taskForm.get('status')?.touched"
+                          class="slds-form-element__help">Status is required.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                  <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form-element"
+                      [class.slds-has-error]="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched">
+                      <label class="slds-form-element__label" for="dueDate">Due Date</label>
+                      <div class="slds-form-element__control">
+                        <input type="date" id="dueDate" class="slds-input" name="dueDate" formControlName="dueDate">
+                      </div>
+                    </div>
+                    <div *ngIf="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched"
+                      class="slds-form-element__help">Due Date is required.</div>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form-element"
+                      [class.slds-has-error]="taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched">
+                      <label class="slds-form-element__label" for="priority">Priority</label>
+                      <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                          <select class="slds-select" id="priority" name="priority" formControlName="priority">
+                            <option value="null" disabled selected>Select a Priority</option>
+                            <option *ngFor='let priority of priorityList'>{{priority}}</option>
+                          </select>
+                        </div>
+                        <div *ngIf="taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched"
+                          class="slds-form-element__help">Priority is required.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="description">Description</label>
+                  <div class="slds-form-element__control">
+                    <textarea id="description" class="slds-textarea" name="description" formControlName="description"></textarea>
+                  </div>
+                </div>
+                <!-- <div class="slds-modal__footer">
+                  <button class="slds-button slds-button_neutral" type="button" (click)="close()">Cancel</button>
+                  <button class="slds-button slds-button_brand" type="submit" [disabled]="!taskForm.valid">Save</button>
+                </div> -->
+              </form>
+            </div>
+          </div>
+
+          <!-- Modal/Popup Footer -->
+
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" type="button" (click)="close()">Cancel</button>
+            <button class="slds-button slds-button_brand" type="submit" form="taskForm" [disabled]="!taskForm.valid">Save</button>
+          </div>
+      </div>
+  </section>
+</div>
